@@ -1,0 +1,123 @@
+{
+    "1": [
+        {
+            "id": "m1",
+            "conversationId": "1",
+            "sender": "client",
+            "date": "2025-06-01T09:00:00Z",
+            "text": "Hola, ¿cómo estás?"
+        },
+        {
+            "id": "m2",
+            "conversationId": "1",
+            "sender": "agent",
+            "date": "2025-06-01T09:01:00Z",
+            "text": "¡Todo bien! ¿En qué te puedo ayudar?"
+        }
+    ],
+    "2": [
+        {
+            "id": "m3",
+            "conversationId": "2",
+            "sender": "client",
+            "date": "2025-06-01T08:50:00Z",
+            "text": "¿Puedes enviarme el documento?"
+        }
+    ],
+    "3": [
+        {
+            "id": "m4",
+            "conversationId": "3",
+            "sender": "client",
+            "date": "2025-06-01T08:55:00Z",
+            "text": "Reunión a las 10 AM"
+        },
+        {
+            "id": "m5",
+            "conversationId": "3",
+            "sender": "agent",
+            "date": "2025-06-01T08:56:00Z",
+            "text": "Confirmado, nos vemos a las 10 AM."
+        }
+    ],
+    "4": [
+        {
+            "id": "m6",
+            "conversationId": "4",
+            "sender": "client",
+            "date": "2025-06-01T08:45:00Z",
+            "text": "¿Dónde está el informe?"
+        },
+        {
+            "id": "m7",
+            "conversationId": "4",
+            "sender": "agent",
+            "date": "2025-06-01T08:46:00Z",
+            "text": "Lo estoy revisando, te lo enviaré pronto."
+        }
+    ],
+    "5": [
+        {
+            "id": "m8",
+            "conversationId": "5",
+            "sender": "client",
+            "date": "2025-06-01T08:40:00Z",
+            "text": "Gracias por tu ayuda"
+        },
+        {
+            "id": "m9",
+            "conversationId": "5",
+            "sender": "agent",
+            "date": "2025-06-01T08:41:00Z",
+            "text": "De nada, estoy aquí para ayudar."
+        }
+    ],
+    "6": [
+        {
+            "id": "m10",
+            "conversationId": "6",
+            "sender": "client",
+            "date": "2025-06-01T08:30:00Z",
+            "text": "¿Nos vemos mañana?"
+        },
+        {
+            "id": "m11",
+            "conversationId": "6",
+            "sender": "agent",
+            "date": "2025-06-01T08:31:00Z",
+            "text": "Sí, nos vemos mañana a la misma hora."
+        }
+    ],
+    "7": [
+        {
+            "id": "m12",
+            "conversationId": "7",
+            "sender": "client",
+            "date": "2025-06-01T08:20:00Z",
+            "text": "Confirmación de la cita"
+        },
+        {
+            "id": "m13",
+            "conversationId": "7",
+            "sender": "agent",
+            "date": "2025-06-01T08:21:00Z",
+            "text": "Tu cita está confirmada."
+        }
+    ],
+    "8": [
+        {
+            "id": "m14",
+            "conversationId": "8",
+            "sender": "client",
+            "date": "2025-06-01T08:10:00Z",
+            "text": "¿Puedes llamarme?"
+        },
+        {
+            "id": "m15",
+            "conversationId": "8",
+            "sender": "agent",
+            "date": "2025-06-01T08:11:00Z",
+            "text": "Claro, te llamo en un momento."
+        }
+    ]
+}

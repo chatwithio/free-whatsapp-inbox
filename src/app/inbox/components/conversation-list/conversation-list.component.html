@@ -1,0 +1,28 @@
+<div class="conversation-list">
+    @for (conversation of conversations; track conversation.id) {
+    <div class="conversation-list__item" (click)="onSelectConversation(conversation)"
+        [class.conversation-list__item--selected]="conversation.id === selectedConversationId"
+        [attr.aria-label]="'Conversación con ' + conversation.phoneNumber" role="button" tabindex="0">
+
+        <div class="conversation-list__phone">
+            {{ conversation.phoneNumber }}
+        </div>
+
+        <div class="conversation-list__last-message">
+            {{ conversation.lastMessage }}
+        </div>
+
+        @if (conversation.unreadCount > 0) {
+        <div class="conversation-list__unread">
+            {{ conversation.unreadCount }} nuevos
+        </div>
+        }
+    </div>
+    }
+
+    @if (conversations.length === 0) {
+    <div class="conversation-list__empty">
+        No hay conversaciones disponibles.
+    </div>
+    }
+</div>

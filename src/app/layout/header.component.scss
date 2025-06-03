@@ -1,0 +1,57 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    height: 60px;
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+
+        img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        &__title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+
+        &__username {
+            margin-right: 15px;
+            font-size: 0.9rem;
+        }
+
+        &__logout {
+            background: transparent;
+            border: 1px solid white;
+            border-radius: 4px;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+<div class="inbox">
+    <div class="inbox__sidebar">
+        <app-conversation-list (conversationSelected)="onConversationSelected($event)"
+            [selectedConversationId]="selectedConversationId"></app-conversation-list>
+    </div>
+
+    <div class="inbox__main">
+        @if (selectedConversationId; as id) {
+        <app-conversation-view [conversationId]="id"></app-conversation-view>
+        } @else {
+        <div class="inbox__empty">
+            Selecciona una conversación para verla aquí.
+        </div>
+        }
+    </div>
+</div>

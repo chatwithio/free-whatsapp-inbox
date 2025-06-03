@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #c4d600;
+    --text-color: #333;
+    --light-primary-color: #e8f2dc;
+    --dark-primary-color: #a3b200;
+    --bg-color: #f4f4f4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.layout__content {
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}

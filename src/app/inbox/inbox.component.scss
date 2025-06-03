@@ -1,0 +1,34 @@
+.inbox {
+    display: flex;
+    height: 100%;
+
+    app-conversation-view {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__sidebar {
+        width: 30%;
+        max-width: 400px;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+    }
+
+    &__main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    &__empty {
+        margin: auto;
+        text-align: center;
+        color: #999;
+        font-style: italic;
+        padding: 20px;
+    }
+}
