@@ -6,6 +6,20 @@
 
     <div class="inbox__main">
         @if (selectedConversationId; as id) {
+        <!-- Header de la conversación -->
+        <div class="inbox__header">
+            <div class="inbox__phone">
+                📞 {{ selectedConversation?.phoneNumber || 'Número desconocido' }}
+            </div>
+            <div class="inbox__agent">
+                Agente asignado:
+                <select [(ngModel)]="assignedAgent">
+                    <option *ngFor="let agent of agents" [value]="agent">{{ agent }}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Conversación -->
         <app-conversation-view [conversationId]="id"></app-conversation-view>
         } @else {
         <div class="inbox__empty">
@@ -13,4 +27,11 @@
         </div>
         }
     </div>
+
+    @if (selectedConversation) {
+    <div class="inbox__details">
+        <h4>Notas internas</h4>
+        <textarea [(ngModel)]="internalNotes" placeholder="Añadir nota..."></textarea>
+    </div>
+    }
 </div>

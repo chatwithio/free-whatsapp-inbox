@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ConversationListComponent } from './components/conversation-list/conversation-list.component';
 import { ConversationViewComponent } from './components/conversation-view/conversation-view.component';
 import { Conversation } from './models/conversation.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-inbox',
@@ -10,15 +11,24 @@ import { Conversation } from './models/conversation.model';
   imports: [
     CommonModule,
     ConversationListComponent,
-    ConversationViewComponent
+    ConversationViewComponent,
+    FormsModule
   ],
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.scss']
 })
 export class InboxComponent {
   selectedConversationId: string | null = null;
+  selectedConversation: Conversation | null = null;
+
+  agents: string[] = ['Agente 1', 'Agente 2', 'Agente 3'];
+  assignedAgent: string = this.agents[0];
+
+  internalNotes: string = '';
+
 
   onConversationSelected(conversation: Conversation): void {
     this.selectedConversationId = conversation.id;
+    this.selectedConversation = conversation;
   }
 }
