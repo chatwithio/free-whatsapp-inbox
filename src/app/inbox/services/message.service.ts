@@ -9,19 +9,81 @@ import { Message } from '../../inbox/models/message.model';
 })
 export class MessageService {
 
-  private conversationsUrl = '/assets/mock-data/conversations.json';
-  private messagesUrl = '/assets/mock-data/messages.json';
+  private backendBaseUrl = 'https://services.tochat.be/mvp/whatsapp';
 
   constructor(private http: HttpClient) { }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(this.conversationsUrl);
+    const url = `${this.backendBaseUrl}/messages`; // Nuevo endpoint sin phoneNumber
+
+    return this.http.get<{ status: string, messages: any[] }>(url).pipe(
+      map(response => {
+        if (response.status === 'ok') {
+          const messages = response.messages;
+
+          // Agrupamos por phoneNumber
+          const conversationsMap: { [phoneNumber: string]: any[] } = {};
+          messages.forEach(msg => {
+            if (!conversationsMap[msg.contact]) {
+              conversationsMap[msg.contact] = [];
+            }
+            conversationsMap[msg.contact].push(msg);
+          });
+
+          // Transformamos cada grupo en una conversación
+          const conversations: Conversation[] = Object.keys(conversationsMap).map(phoneNumber => {
+            const msgs = conversationsMap[phoneNumber];
+            const lastMsg = msgs[msgs.length - 1];
+
+            return {
+              id: phoneNumber,
+              phoneNumber: phoneNumber,
+              userName: '',
+              lastMessage: lastMsg.text,
+              unreadCount: 0
+            } as Conversation;
+          });
+
+          return conversations;
+        } else {
+          console.error('Error al obtener conversaciones:', response);
+          return [];
+        }
+      })
+    );
   }
 
+
   getMessages(conversationId: string): Observable<Message[]> {
-    return this.http.get<{ [key: string]: Message[] }>(this.messagesUrl).pipe(
-      map(data => data[conversationId] || [])
+    const phoneNumber = conversationId.replace(/\D/g, '');
+    const url = `${this.backendBaseUrl}/${phoneNumber}/messages`;
+
+    return this.http.get<{ status: string, messages: any[] }>(url).pipe(
+      map(response => {
+        if (response.status === 'ok') {
+          return response.messages.map(msg => ({
+            id: msg.id.toString(),
+            conversationId: msg.contact,
+            sender: msg.type === 'sent' ? 'agent' : 'client',
+            date: new Date(msg.created).toISOString(),
+            text: msg.text
+          } as Message));
+        } else {
+          console.error('Error al obtener mensajes:', response);
+          return [];
+        }
+      })
     );
+  }
+
+  sendMessage(phoneNumber: string, messageText: string): Observable<any> {
+    const url = `${this.backendBaseUrl}/send`;
+    const payload = {
+      to: phoneNumber,
+      message: messageText
+    };
+
+    return this.http.post(url, payload);
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Conversation } from '../../models/conversation.model';
 import { MessageService } from '../../services/message.service';
@@ -10,19 +10,30 @@ import { MessageService } from '../../services/message.service';
   templateUrl: './conversation-list.component.html',
   styleUrls: ['./conversation-list.component.scss']
 })
-export class ConversationListComponent implements OnInit {
+export class ConversationListComponent implements OnInit, OnDestroy {
+  @Input() selectedConversationId: string | null = null;
+  // Event when a conversation is selected
+  @Output() conversationSelected = new EventEmitter<Conversation>();
+
   // Conversation list 
   conversations: Conversation[] = [];
 
-  @Input() selectedConversationId: string | null = null;
-
-  // Event when a conversation is selected
-  @Output() conversationSelected = new EventEmitter<Conversation>();
+  private intervalId: any;
 
   constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.loadConversations();
+
+    this.intervalId = setInterval(() => {
+      this.loadConversations();
+    }, 5000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   loadConversations(): void {

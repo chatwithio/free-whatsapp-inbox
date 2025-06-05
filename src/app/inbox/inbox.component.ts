@@ -28,7 +28,7 @@ export class InboxComponent {
 
 
   onConversationSelected(conversation: Conversation): void {
-    this.selectedConversationId = conversation.id;
+    this.selectedConversationId = conversation.phoneNumber;
     this.selectedConversation = conversation;
   }
 }
