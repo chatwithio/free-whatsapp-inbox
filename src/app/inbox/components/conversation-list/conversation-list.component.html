@@ -5,7 +5,7 @@
         [attr.aria-label]="'Conversación con ' + conversation.phoneNumber" role="button" tabindex="0">
 
         <div class="conversation-list__phone">
-            {{ conversation.phoneNumber }}
+            {{ conversation.userName || conversation.phoneNumber }}
         </div>
 
         <div class="conversation-list__last-message">

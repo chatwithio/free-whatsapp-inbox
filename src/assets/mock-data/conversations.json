@@ -2,90 +2,105 @@
     {
         "id": "1",
         "phoneNumber": "+34600000001",
+        "userName": "Carlos Sánchez",
         "lastMessage": "Hola, ¿cómo estás?",
         "unreadCount": 2
     },
     {
         "id": "2",
         "phoneNumber": "+34600000002",
+        "userName": "Laura García",
         "lastMessage": "¿Puedes enviarme el documento?",
         "unreadCount": 0
     },
     {
         "id": "3",
         "phoneNumber": "+34600000003",
+        "userName": "",
         "lastMessage": "Reunión a las 10 AM",
         "unreadCount": 1
     },
     {
         "id": "4",
         "phoneNumber": "+34600000004",
+        "userName": "Ana Fernández",
         "lastMessage": "¿Dónde está el informe?",
         "unreadCount": 3
     },
     {
         "id": "5",
         "phoneNumber": "+34600000005",
+        "userName": "Miguel Torres",
         "lastMessage": "Gracias por tu ayuda",
         "unreadCount": 0
     },
     {
         "id": "6",
         "phoneNumber": "+34600000006",
+        "userName": "Paula Ruiz",
         "lastMessage": "¿Nos vemos mañana?",
         "unreadCount": 1
     },
     {
         "id": "7",
         "phoneNumber": "+34600000007",
+        "userName": "Javier López",
         "lastMessage": "Confirmación de la cita",
         "unreadCount": 0
     },
     {
         "id": "8",
         "phoneNumber": "+34600000008",
+        "userName": "Sara Gómez",
         "lastMessage": "¿Puedes llamarme?",
         "unreadCount": 2
     },
     {
         "id": "9",
         "phoneNumber": "+34600000009",
+        "userName": "David Herrera",
         "lastMessage": "Revisión del proyecto",
         "unreadCount": 0
     },
     {
         "id": "10",
         "phoneNumber": "+34600000010",
+        "userName": "Elena Martínez",
         "lastMessage": "Saludos cordiales",
         "unreadCount": 1
     },
     {
         "id": "11",
         "phoneNumber": "+34600000011",
+        "userName": "Álvaro Romero",
         "lastMessage": "¿Cómo va todo?",
         "unreadCount": 0
     },
     {
         "id": "12",
         "phoneNumber": "+34600000012",
+        "userName": "María López",
         "lastMessage": "Necesito tu opinión",
         "unreadCount": 2
     },
     {
         "id": "13",
         "phoneNumber": "+34600000013",
+        "userName": "Diego Sánchez",
         "lastMessage": "¿Puedes revisar esto?",
         "unreadCount": 0
     },
     {
         "id": "14",
         "phoneNumber": "+34600000014",
+        "userName": "Lucía Ortega",
         "lastMessage": "Gracias por tu paciencia",
         "unreadCount": 1
     },
     {
         "id": "15",
         "phoneNumber": "+34600000015",
+        "userName": "Hugo Pérez",
         "lastMessage": "¿Te gustaría almorzar?",
         "unreadCount": 0
     }

@@ -21,7 +21,7 @@ export class InboxComponent {
   selectedConversationId: string | null = null;
   selectedConversation: Conversation | null = null;
 
-  agents: string[] = ['Agente 1', 'Agente 2', 'Agente 3'];
+  agents: string[] = ['Valeria Alcaine', 'Pedro Rodríguez', 'Marta Yuste', 'Alejandro Urzola'];
   assignedAgent: string = this.agents[0];
 
   internalNotes: string = '';

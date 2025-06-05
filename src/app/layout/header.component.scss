@@ -7,7 +7,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: var(--primary-color);
-    color: var(--text-color);
+    color: var(--text-color-light);
     padding: 10px 20px;
     height: 60px;
 
@@ -23,6 +23,7 @@
         img {
             height: 30px;
             margin-right: 10px;
+            filter: brightness(100);
         }
 
         &__title {

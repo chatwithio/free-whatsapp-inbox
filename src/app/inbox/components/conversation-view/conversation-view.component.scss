@@ -28,13 +28,17 @@
         &.agent {
             align-self: flex-end;
             background-color: var(--primary-color);
+            color: var(--text-color-light);
+
+            .conversation-view__date {
+                color: #e5e5e5;
+            }
         }
     }
 
-    &__timestamp {
+    &__date {
         font-size: 0.75rem;
         color: #999;
-        margin-bottom: 4px;
     }
 
     &__text {
@@ -67,7 +71,7 @@
         button {
             padding: 8px 16px;
             background-color: var(--primary-color);
-            color: var(--text-color);
+            color: var(--text-color-light);
             border: none;
             border-radius: 4px;
             cursor: pointer;
