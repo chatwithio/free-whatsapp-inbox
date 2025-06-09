@@ -25,3 +25,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Change callback URL at 360dialog
+
+curl --request POST  --url https://waba-v2.360dialog.io/v1/configs/webhook  --header 'Content-Type: application/json'  --header 'D360-Api-Key: NlCv8R4mnWaf2eHPqc28xGPhAK' --data '{"url": "https://eu2-api.eng.bloomreach.com/intg/webhook-handler/v1.0/136cabb7-0f5f-4e0a-86d8-2f3e3641565f/callback"}'
+
+
+curl --request POST  --url https://waba-v2.360dialog.io/v1/configs/webhook  --header 'Content-Type: application/json'  --header 'D360-Api-Key: NlCv8R4mnWaf2eHPqc28xGPhAK' --data '{"url": "https://services.tochat.be/mvp/whatsapp/webhook"}'
+

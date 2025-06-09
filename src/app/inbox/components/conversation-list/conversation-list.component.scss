@@ -10,6 +10,11 @@
         cursor: pointer;
         border-bottom: 1px solid #e0e0e0;
         transition: background-color 0.2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 70px; // Ajusta la altura fija como necesites
+        overflow: hidden;
 
         &--selected {
             background-color: var(--light-primary-color);
@@ -20,11 +25,17 @@
     &__phone {
         font-weight: 600;
         font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__last-message {
         font-size: 0.9rem;
         color: #666;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__unread {
