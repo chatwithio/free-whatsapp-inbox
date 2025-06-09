@@ -3,8 +3,7 @@
         @if (messages.length > 0) {
         @for (message of messages; track message.id) {
         <div class="conversation-view__message" [ngClass]="message.sender">
-            <div class="conversation-view__text">
-                {{ message.text }}
+            <div class="conversation-view__text" [innerHTML]="message.text | whatsappFormat">
             </div>
             <small class="conversation-view__date">
                 {{ message.date | date:'shortTime' }}

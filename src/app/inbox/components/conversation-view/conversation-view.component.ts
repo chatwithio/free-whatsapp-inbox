@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Message } from '../../models/message.model';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from '../../services/message.service';
+import { WhatsappFormatPipe } from '../../../shared/pipes/whatsapp-format.pipe';
 
 @Component({
   selector: 'app-conversation-view',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, WhatsappFormatPipe],
   templateUrl: './conversation-view.component.html',
   styleUrls: ['./conversation-view.component.scss']
 })
@@ -54,13 +55,27 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
   loadMessages(): void {
     this.messageService.getMessages(this.conversationId!).subscribe({
       next: (data) => {
-        this.messages = data;
-        this.shouldScrollToBottom = true;
+        const newMessages = data;
+
+        // Comprobamos si hay mensajes nuevos
+        const lastLoadedMessage = this.messages[this.messages.length - 1];
+        const lastNewMessage = newMessages[newMessages.length - 1];
+
+        const hasNewMessages =
+          !lastLoadedMessage ||
+          !lastNewMessage ||
+          lastLoadedMessage.id !== lastNewMessage.id;
+
+        this.messages = newMessages;
+
+        // Solo hacemos scroll si hay mensajes nuevos
+        this.shouldScrollToBottom = hasNewMessages;
       },
       error: (err) => {
         console.error('Error al cargar los mensajes:', err);
       }
     });
+
   }
 
   sendMessage(): void {
