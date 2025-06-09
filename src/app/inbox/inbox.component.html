@@ -15,7 +15,9 @@
         </div>
 
         <!-- Conversación -->
-        <app-conversation-view [conversationId]="id"></app-conversation-view>
+        <div class="inbox__conversation">
+            <app-conversation-view [conversationId]="id"></app-conversation-view>
+        </div>
         } @else {
         <div class="inbox__empty">
             Selecciona una conversación para verla aquí.

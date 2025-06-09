@@ -20,8 +20,13 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
         position: relative;
+
+        .inbox__conversation {
+            flex: 1;
+            overflow-y: auto;
+        }
+
     }
 
     &__header {
