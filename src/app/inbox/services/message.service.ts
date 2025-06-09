@@ -14,7 +14,7 @@ export class MessageService {
   constructor(private http: HttpClient) { }
 
   getConversations(): Observable<Conversation[]> {
-    const url = `${this.backendBaseUrl}/messages`; // Nuevo endpoint sin phoneNumber
+    const url = `${this.backendBaseUrl}/messages`;
 
     return this.http.get<{ status: string, messages: any[] }>(url).pipe(
       map(response => {
@@ -33,7 +33,13 @@ export class MessageService {
           // Transformamos cada grupo en una conversación
           const conversations: Conversation[] = Object.keys(conversationsMap).map(phoneNumber => {
             const msgs = conversationsMap[phoneNumber];
-            const lastMsg = msgs[msgs.length - 1];
+
+            // Ordenamos los mensajes de la conversación por fecha (por si acaso)
+            const orderedMsgs = msgs.sort((a, b) =>
+              new Date(b.created).getTime() - new Date(a.created).getTime()
+            );
+
+            const lastMsg = orderedMsgs[0]; // Último mensaje más reciente
 
             return {
               id: phoneNumber,
@@ -44,6 +50,12 @@ export class MessageService {
             } as Conversation;
           });
 
+          // Ordenamos las conversaciones por la fecha del último mensaje
+          conversations.sort((a, b) =>
+            new Date(conversationsMap[b.phoneNumber][0].created).getTime() -
+            new Date(conversationsMap[a.phoneNumber][0].created).getTime()
+          );
+
           return conversations;
         } else {
           console.error('Error al obtener conversaciones:', response);
@@ -52,7 +64,6 @@ export class MessageService {
       })
     );
   }
-
 
   getMessages(conversationId: string): Observable<Message[]> {
     const phoneNumber = conversationId.replace(/\D/g, '');
@@ -86,4 +97,3 @@ export class MessageService {
     return this.http.post(url, payload);
   }
 }
-
