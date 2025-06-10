@@ -34,6 +34,11 @@
                 color: #e5e5e5;
             }
         }
+
+        .conversation-view__date {
+            display: block;
+            text-align: right;
+        }
     }
 
     &__date {
