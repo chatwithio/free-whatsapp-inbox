@@ -24,10 +24,11 @@ export class MessageService {
           // Agrupamos por phoneNumber
           const conversationsMap: { [phoneNumber: string]: any[] } = {};
           messages.forEach(msg => {
-            if (!conversationsMap[msg.contact]) {
-              conversationsMap[msg.contact] = [];
+            let phoneNumber = msg.contact.replace(/\D/g, '');
+            if (!conversationsMap[phoneNumber]) {
+              conversationsMap[phoneNumber] = [];
             }
-            conversationsMap[msg.contact].push(msg);
+            conversationsMap[phoneNumber].push(msg);
           });
 
           // Transformamos cada grupo en una conversación
@@ -88,6 +89,7 @@ export class MessageService {
   }
 
   sendMessage(phoneNumber: string, messageText: string): Observable<any> {
+    phoneNumber = phoneNumber.replace(/\D/g, '');
     const url = `${this.backendBaseUrl}/send`;
     const payload = {
       to: phoneNumber,
