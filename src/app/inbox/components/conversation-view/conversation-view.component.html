@@ -19,10 +19,10 @@
     </div>
 
     <div class="conversation-view__input-container">
-        <input type="text" [(ngModel)]="newMessageText" placeholder="Escribe un mensaje..."
+        <input type="text" [(ngModel)]="newMessageText" placeholder="Escribe un mensaje..." [disabled]="isSending"
             (keydown.enter)="sendMessage()" aria-label="Campo para escribir mensaje" />
-        <button type="button" (click)="sendMessage()" aria-label="Enviar mensaje">
-            Enviar
+        <button type="button" (click)="sendMessage()" aria-label="Enviar mensaje" [disabled]="isSending">
+            {{ isSending ? 'Enviando...' : 'Enviar' }}
         </button>
     </div>
 </div>

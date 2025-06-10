@@ -18,6 +18,7 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
 
   messages: Message[] = [];
   newMessageText: string = '';
+  isSending: boolean = false;
 
   private shouldScrollToBottom: boolean = false;
   private intervalId: any;
@@ -80,7 +81,7 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
 
   sendMessage(): void {
     const messageText = this.newMessageText.trim();
-    if (!messageText) {
+    if (!messageText || this.isSending) {
       return;
     }
 
@@ -88,6 +89,8 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
       console.error('No hay conversationId definido.');
       return;
     }
+
+    this.isSending = true;
 
     // Llamar al servicio
     this.messageService.sendMessage(this.conversationId, messageText).subscribe({
@@ -106,9 +109,11 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
         this.messages.push(newMessage);
         this.newMessageText = '';
         this.shouldScrollToBottom = true;
+        this.isSending = false;
       },
       error: (error) => {
         console.error('Error al enviar el mensaje', error);
+        this.isSending = false;
       }
     });
   }
