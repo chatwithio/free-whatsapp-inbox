@@ -1,35 +1,78 @@
-# WhatsappInbox
+# 📨 Free WhatsApp Inbox
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+Un sistema de bandeja de entrada gratuito y open-source para recibir, visualizar y responder mensajes de WhatsApp usando la API de 360dialog.
 
-## Development server
+![Screenshot](https://raw.githubusercontent.com/chatwithio/free-whatsapp-inbox/main/public/demo.png) <!-- Actualiza con una imagen real si tienes -->
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## ✨ Características
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- 🟢 Conexión con la API de WhatsApp de 360dialog.
+- 🧵 Conversaciones agrupadas por número.
+- 📥 Visualización en tiempo real de mensajes.
+- ✍️ Envío de mensajes directamente desde el panel.
+- 🗂 Interfaz tipo chat sencilla y moderna.
+- 📱 Vista responsive adaptada a móvil (WhatsApp style).
+- 🔌 Backend en Symfony + almacenamiento en base de datos.
+- 🔁 Webhook con reenvío a sistemas externos como Bloomreach.
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🚀 Demo rápida
 
-## Running unit tests
+Puedes ver una demo funcionando en:  
+🔗 [https://free-whatsapp-inbox.vercel.app](https://free-whatsapp-inbox.vercel.app)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## 📦 Requisitos
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Node.js `>=18`
+- Angular CLI `>=17`
+- Symfony `>=6` (opcional si conectas a tu propio backend)
+- Base de datos MySQL o SQLite
+- Una cuenta de [360dialog](https://www.360dialog.com/) con un número de WhatsApp conectado
 
-## Further help
+---
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## 🛠 Instalación
 
-## Change callback URL at 360dialog
+### 1. Clonar el repositorio
 
-curl --request POST  --url https://waba-v2.360dialog.io/v1/configs/webhook  --header 'Content-Type: application/json'  --header 'D360-Api-Key: NlCv8R4mnWaf2eHPqc28xGPhAK' --data '{"url": "https://eu2-api.eng.bloomreach.com/intg/webhook-handler/v1.0/136cabb7-0f5f-4e0a-86d8-2f3e3641565f/callback"}'
+```bash
+git clone https://github.com/chatwithio/free-whatsapp-inbox.git
+cd free-whatsapp-inbox
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Ejecutar el entorno local
+
+```bash
+ng serve
+```
+
+### 🖼 Cambiar el logo
+
+El logo se encuentra en el componente `<header>`, concretamente en la siguiente línea:
+
+```html
+<img src="https://dstatic.w2m.com/assets/flowo/dist/flowo/logo/logo.svg" alt="Logo Flowo">
+```
+
+Para personalizarlo:
+
+1. Sustituye la URL del atributo src por la de tu propio logo (puede ser una URL externa o una imagen local).
+2. Si usas una imagen local, colócala en el directorio src/assets/ del proyecto y usa una ruta relativa: 
+
+```html
+<img src="assets/logo.svg" alt="Tu Logo">
+```
 
 
-curl --request POST  --url https://waba-v2.360dialog.io/v1/configs/webhook  --header 'Content-Type: application/json'  --header 'D360-Api-Key: NlCv8R4mnWaf2eHPqc28xGPhAK' --data '{"url": "https://services.tochat.be/mvp/whatsapp/webhook"}'
 
