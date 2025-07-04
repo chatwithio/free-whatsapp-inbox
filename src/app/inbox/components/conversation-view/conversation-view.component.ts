@@ -4,6 +4,7 @@ import { Message } from '../../models/message.model';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from '../../services/message.service';
 import { WhatsappFormatPipe } from '../../../shared/pipes/whatsapp-format.pipe';
+import { TASK_STATUSES } from '../../../shared/constants/task-statuses';
 
 @Component({
   selector: 'app-conversation-view',
@@ -19,9 +20,15 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
   messages: Message[] = [];
   newMessageText: string = '';
   isSending: boolean = false;
+  currentOportunity: string | null = null;
+  currentTask: string | null = null;
+  dossiers: any[] = [];
+  taskStatuses = TASK_STATUSES;
+  selectedTaskStatus: string | null = null;
 
   private shouldScrollToBottom: boolean = false;
   private intervalId: any;
+  private dossiersLoaded: boolean = false;
 
   constructor(private messageService: MessageService) { }
 
@@ -41,6 +48,7 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conversationId'] && this.conversationId) {
+      this.dossiersLoaded = false;
       this.loadMessages();
     }
   }
@@ -69,6 +77,12 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
 
         this.messages = newMessages;
 
+        // Cargamos los dossieres
+        if (!this.dossiersLoaded && this.messages.length > 0) {
+          this.loadDossiers();
+          this.dossiersLoaded = true;
+        }
+
         // Solo hacemos scroll si hay mensajes nuevos
         this.shouldScrollToBottom = hasNewMessages;
       },
@@ -77,6 +91,26 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
       }
     });
 
+  }
+
+  loadDossiers(): void {
+    // Buscar si hay algún mensaje con task o oportunity
+    const taskMessage = this.messages.find(msg => msg.task);
+    const oportunityMessage = this.messages.find(msg => msg.oportunity);
+    this.currentTask = taskMessage ? taskMessage.task : null;
+    this.currentOportunity = oportunityMessage ? oportunityMessage.oportunity : null;
+
+    // Llamar al endpoint para obtener los dossieres
+    if (this.currentOportunity) {
+      this.messageService.getDossiersByOportunity(this.currentOportunity).subscribe({
+        next: (data) => {
+          this.dossiers = data;
+        },
+        error: (err) => {
+          console.error('Error al cargar los dossieres:', err);
+        }
+      });
+    }
   }
 
   sendMessage(): void {
@@ -103,7 +137,9 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
           conversationId: this.conversationId,
           sender: 'agent',
           date: new Date().toISOString(),
-          text: messageText
+          text: messageText,
+          task: null,
+          oportunity: null
         };
 
         this.messages.push(newMessage);
@@ -118,9 +154,24 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
+  changeTaskStatus(): void {
+    if (!this.currentTask || !this.selectedTaskStatus) return;
+
+    this.messageService.updateTaskStatus(this.currentTask, this.selectedTaskStatus).subscribe({
+      next: () => {
+        console.log('Tarea actualizada');
+      },
+      error: (err) => {
+        console.error('Error al actualizar la tarea:', err);
+      }
+    });
+  }
+
   private scrollToBottom(): void {
     if (this.bottom) {
       this.bottom.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
+
 }

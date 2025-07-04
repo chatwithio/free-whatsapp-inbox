@@ -78,7 +78,9 @@ export class MessageService {
             conversationId: msg.contact,
             sender: msg.type === 'sent' ? 'agent' : 'client',
             date: new Date(msg.created).toISOString(),
-            text: msg.text
+            text: msg.text,
+            task: msg.task || null,
+            oportunity: msg.oportunity || null
           } as Message));
         } else {
           console.error('Error al obtener mensajes:', response);
@@ -97,5 +99,16 @@ export class MessageService {
     };
 
     return this.http.post(url, payload);
+  }
+
+  getDossiersByOportunity(oportunityId: string): Observable<any[]> {
+    const url = `${this.backendBaseUrl}/get-dossieres-task/${oportunityId}`;
+    return this.http.get<any[]>(url);
+  }
+
+  updateTaskStatus(taskId: string, status: string) {
+    taskId = taskId.replace(/\D/g, '');
+    const url = `${this.backendBaseUrl}/set-statatus-task/${taskId}/${status}`;
+    return this.http.patch(url, {});
   }
 }

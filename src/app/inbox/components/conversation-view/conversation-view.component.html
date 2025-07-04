@@ -1,28 +1,47 @@
 <div class="conversation-view">
-    <div class="conversation-view__messages">
-        @if (messages.length > 0) {
-        @for (message of messages; track message.id) {
-        <div class="conversation-view__message" [ngClass]="message.sender">
-            <div class="conversation-view__text" [innerHTML]="message.text | whatsappFormat">
+    <div class="conversation-view__main">
+        <div class="conversation-view__messages">
+            @if (messages.length > 0) {
+            @for (message of messages; track message.id) {
+            <div class="conversation-view__message" [ngClass]="message.sender">
+                <div class="conversation-view__text" [innerHTML]="message.text | whatsappFormat">
+                </div>
+                <small class="conversation-view__date">
+                    {{ message.date | date:'shortTime' }}
+                </small>
             </div>
-            <small class="conversation-view__date">
-                {{ message.date | date:'shortTime' }}
-            </small>
+            }
+            <div #bottom></div>
+            } @else {
+            <div class="conversation-view__no-messages">
+                No hay mensajes para esta conversación.
+            </div>
+            }
         </div>
-        }
-        <div #bottom></div>
-        } @else {
-        <div class="conversation-view__no-messages">
-            No hay mensajes para esta conversación.
-        </div>
-        }
-    </div>
 
-    <div class="conversation-view__input-container">
-        <input type="text" [(ngModel)]="newMessageText" placeholder="Escribe un mensaje..." [disabled]="isSending"
-            (keydown.enter)="sendMessage()" aria-label="Campo para escribir mensaje" />
-        <button type="button" (click)="sendMessage()" aria-label="Enviar mensaje" [disabled]="isSending">
-            {{ isSending ? 'Enviando...' : 'Enviar' }}
-        </button>
+        <div class="conversation-view__input-container">
+            <input type="text" [(ngModel)]="newMessageText" placeholder="Escribe un mensaje..." [disabled]="isSending"
+                (keydown.enter)="sendMessage()" aria-label="Campo para escribir mensaje" />
+            <button type="button" (click)="sendMessage()" aria-label="Enviar mensaje" [disabled]="isSending">
+                {{ isSending ? 'Enviando...' : 'Enviar' }}
+            </button>
+        </div>
+    </div>
+    <div class="conversation-view__details">
+        <div class="conversation-view__details-header">
+            <h4 class="conversation-view__details-header-title">Detalles de la conversación</h4>
+        </div>
+        <div class="conversation-view__details-status" *ngIf="currentTask">
+            <label for="task-status-select">Estado de la tarea:</label>
+            <select id="task-status-select" [(ngModel)]="selectedTaskStatus">
+                <option [ngValue]="null" disabled selected>Selecciona estado</option>
+                <option *ngFor="let status of taskStatuses" [value]="status.slug">
+                    {{ status.name }}
+                </option>
+            </select>
+            <button (click)="changeTaskStatus()" [disabled]="!selectedTaskStatus">
+                Guardar estado
+            </button>
+        </div>
     </div>
 </div>
