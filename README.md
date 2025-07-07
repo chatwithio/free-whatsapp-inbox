@@ -2,8 +2,7 @@
 
 Un sistema de bandeja de entrada gratuito y open-source para recibir, visualizar y responder mensajes de WhatsApp usando la API de 360dialog.
 
-![Screenshot](https://raw.githubusercontent.com/chatwithio/free-whatsapp-inbox/main/public/demo.png) <!-- Actualiza con una imagen real si tienes -->
-
+![Screenshot](https://raw.githubusercontent.com/chatwithio/free-whatsapp-inbox/main/public/Inbox_Whatsapp.png)
 ---
 
 ## ✨ Características
