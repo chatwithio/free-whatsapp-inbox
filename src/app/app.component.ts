@@ -11,5 +11,5 @@ import { HeaderComponent } from './layout/header.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'W2M Inbox';
+  title = 'ChatWith Inbox';
 }

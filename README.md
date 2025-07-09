@@ -60,7 +60,7 @@ ng serve
 El logo se encuentra en el componente `<header>`, concretamente en la siguiente línea:
 
 ```html
-<img src="https://dstatic.w2m.com/assets/flowo/dist/flowo/logo/logo.svg" alt="Logo Flowo">
+<img src="/assets/chatwith-logo-min.svg" alt="ChatWith Logo">
 ```
 
 Para personalizarlo:
@@ -69,7 +69,7 @@ Para personalizarlo:
 2. Si usas una imagen local, colócala en el directorio src/assets/ del proyecto y usa una ruta relativa: 
 
 ```html
-<img src="assets/logo.svg" alt="Tu Logo">
+<img src="/assets/logo.svg" alt="Tu Logo">
 ```
 
 
