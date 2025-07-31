@@ -1,3 +1,5 @@
+@import 'ngx-toastr/toastr';
+
 :root {
     --primary-color: #ff736c;
     --text-color: #333;
@@ -5,6 +7,7 @@
     --light-primary-color: #ffd1c8;
     --dark-primary-color: #c62828;
     --bg-color: #f4f4f4;
+    --secondary-color: #777777;
 }
 
 * {
@@ -24,4 +27,39 @@ body {
     margin-top: 60px;
     height: calc(100vh - 60px);
     overflow-y: auto;
+}
+
+input,
+textarea {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 8px;
+    width: 100%;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: var(--dark-primary-color);
+    }
+}
+
+button.btn-secondary {
+    background-color: var(--secondary-color);
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
 }

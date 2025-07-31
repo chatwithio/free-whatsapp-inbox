@@ -1,0 +1,12 @@
+<div class="modal-overlay" (click)="closeModal()"></div>
+<div class="modal">
+    <h2>Iniciar nueva conversación</h2>
+    <div class="form-wrapper">
+        <input type="text" id="phone" placeholder="Número de teléfono (con +34)" [(ngModel)]="phone" />
+        <textarea id="message" placeholder="Escribe el primer mensaje" [(ngModel)]="message"></textarea>
+    </div>
+    <div class="actions">
+        <button (click)="closeModal()" class="btn-secondary">Cancelar</button>
+        <button (click)="startConversation()" [disabled]="!phone || !message">Iniciar</button>
+    </div>
+</div>

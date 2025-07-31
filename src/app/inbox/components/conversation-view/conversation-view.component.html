@@ -31,17 +31,5 @@
         <div class="conversation-view__details-header">
             <h4 class="conversation-view__details-header-title">Detalles de la conversación</h4>
         </div>
-        <div class="conversation-view__details-status" *ngIf="currentTask">
-            <label for="task-status-select">Estado de la tarea:</label>
-            <select id="task-status-select" [(ngModel)]="selectedTaskStatus">
-                <option [ngValue]="null" disabled selected>Selecciona estado</option>
-                <option *ngFor="let status of taskStatuses" [value]="status.slug">
-                    {{ status.name }}
-                </option>
-            </select>
-            <button (click)="changeTaskStatus()" [disabled]="!selectedTaskStatus">
-                Guardar estado
-            </button>
-        </div>
     </div>
 </div>

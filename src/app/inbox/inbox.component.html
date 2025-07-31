@@ -1,5 +1,13 @@
 <div class="inbox">
     <div class="inbox__sidebar">
+        <div class="inbox__search">
+            <input type="text" placeholder="Buscar...">
+        </div>
+        <div class="inbox__new-conversation-wrapper">
+            <button class="inbox__new-conversation-btn" (click)="showModal = true">
+                Nueva conversación
+            </button>
+        </div>
         <app-conversation-list (conversationSelected)="onConversationSelected($event)"
             [selectedConversationId]="selectedConversationId"></app-conversation-list>
     </div>
@@ -25,3 +33,5 @@
         }
     </div>
 </div>
+<app-conversation-new-modal *ngIf="showModal" (close)="showModal = false" (start)="handleNewConversation($event)">
+</app-conversation-new-modal>
