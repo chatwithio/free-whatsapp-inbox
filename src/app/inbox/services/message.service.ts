@@ -3,99 +3,93 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Conversation } from '../models/conversation.model';
 import { Message } from '../../inbox/models/message.model';
+import { environment } from '../../../environments/environment';
+
+type ApiListResponse = {
+  status: string;
+  messages: any[];
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
-  private backendBaseUrl = 'https://services.tochat.be/mvp/whatsapp';
+  private backendBaseUrl = environment.inboxApiBaseUrl;
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Conversaciones = último mensaje de cada contacto.
+   * Usamos /messages/preview que ya devuelve un mensaje por contacto.
+   */
   getConversations(): Observable<Conversation[]> {
-    const url = `${this.backendBaseUrl}/messages`;
+    const url = `${this.backendBaseUrl}/messages/preview`;
+    // const url = `https://services.tochat.be/mvp/whatsapp/34654131150/messages`;
+    return this.http.get<ApiListResponse>(url).pipe(
+      map((response) => {
+        if (response.status !== 'ok') return [];
+        console.log(response);
+        const conversations = response.messages.map((m: any) => {
+          const phoneNumber = (m.contact ?? '').replace(/\D/g, '');
+          return {
+            id: phoneNumber,
+            phoneNumber,
+            userName: '',
+            lastMessage: m.text ?? '',
+            unreadCount: 0
+          } as Conversation;
+        });
 
-    return this.http.get<{ status: string, messages: any[] }>(url).pipe(
-      map(response => {
-        if (response.status === 'ok') {
-          const messages = response.messages;
+        // Ordenar por fecha del último mensaje (desc)
+        conversations.sort((a: any, b: any) => {
+          const ma = response.messages.find((m: any) => (m.contact ?? '').replace(/\D/g, '') === a.phoneNumber);
+          const mb = response.messages.find((m: any) => (m.contact ?? '').replace(/\D/g, '') === b.phoneNumber);
+          const ta = ma ? new Date(ma.created).getTime() : 0;
+          const tb = mb ? new Date(mb.created).getTime() : 0;
+          return tb - ta;
+        });
 
-          // Agrupamos por phoneNumber
-          const conversationsMap: { [phoneNumber: string]: any[] } = {};
-          messages.forEach(msg => {
-            let phoneNumber = msg.contact.replace(/\D/g, '');
-            if (!conversationsMap[phoneNumber]) {
-              conversationsMap[phoneNumber] = [];
-            }
-            conversationsMap[phoneNumber].push(msg);
-          });
-
-          // Transformamos cada grupo en una conversación
-          const conversations: Conversation[] = Object.keys(conversationsMap).map(phoneNumber => {
-            const msgs = conversationsMap[phoneNumber];
-
-            // Ordenamos los mensajes de la conversación por fecha (por si acaso)
-            const orderedMsgs = msgs.sort((a, b) =>
-              new Date(b.created).getTime() - new Date(a.created).getTime()
-            );
-
-            const lastMsg = orderedMsgs[0]; // Último mensaje más reciente
-
-            return {
-              id: phoneNumber,
-              phoneNumber: phoneNumber,
-              userName: '',
-              lastMessage: lastMsg.text,
-              unreadCount: 0
-            } as Conversation;
-          });
-
-          // Ordenamos las conversaciones por la fecha del último mensaje
-          conversations.sort((a, b) =>
-            new Date(conversationsMap[b.phoneNumber][0].created).getTime() -
-            new Date(conversationsMap[a.phoneNumber][0].created).getTime()
-          );
-
-          return conversations;
-        } else {
-          console.error('Error al obtener conversaciones:', response);
-          return [];
-        }
+        return conversations;
       })
     );
+
   }
 
-  getMessages(conversationId: string): Observable<Message[]> {
+  /**
+   * Detalle de mensajes por conversación.
+   * El backend acepta GET con body para limit/offset. Angular lo permite.
+   */
+  getMessages(conversationId: string, limit = 100, offset = 0): Observable<Message[]> {
     const phoneNumber = conversationId.replace(/\D/g, '');
     const url = `${this.backendBaseUrl}/${phoneNumber}/messages`;
 
-    return this.http.get<{ status: string, messages: any[] }>(url).pipe(
-      map(response => {
-        if (response.status === 'ok') {
-          return response.messages.map(msg => ({
-            id: msg.id.toString(),
-            conversationId: msg.contact,
-            sender: msg.type === 'sent' ? 'agent' : 'client',
-            date: new Date(msg.created).toISOString(),
-            text: msg.text
-          } as Message));
-        } else {
-          console.error('Error al obtener mensajes:', response);
-          return [];
-        }
+    return this.http.request<ApiListResponse>('GET', url, {
+      body: { limit, offset },
+      responseType: 'json'
+    }).pipe(
+      map((response) => {
+        if (!response || (response as any).status !== 'ok') return [];
+        const r = response as ApiListResponse;
+
+        return r.messages.map((msg: any) => ({
+          id: String(msg.id),
+          conversationId: msg.contact,
+          sender: (msg.type === 'sent') ? 'agent' : 'client',
+          date: new Date((msg.created ?? '').replace(' ', 'T')).toISOString(),
+          text: msg.text ?? ''
+        } as Message));
       })
     );
   }
 
+  /**
+   * Envío de mensaje: /send
+   */
   sendMessage(phoneNumber: string, messageText: string): Observable<any> {
-    phoneNumber = phoneNumber.replace(/\D/g, '');
+    const to = phoneNumber.replace(/\D/g, '');
     const url = `${this.backendBaseUrl}/send`;
-    const payload = {
-      to: phoneNumber,
-      message: messageText
-    };
-
+    const payload = { to, message: messageText };
     return this.http.post(url, payload);
   }
 }
