@@ -54,7 +54,7 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadMessages(): void {
-    this.messageService.getMessages(this.conversationId!).subscribe({
+    this.messageService.getMessages(this.conversationId!, 20, 0).subscribe({
       next: (data) => {
         const newMessages = data;
 

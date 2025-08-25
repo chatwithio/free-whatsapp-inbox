@@ -29,7 +29,6 @@ export class MessageService {
     return this.http.get<ApiListResponse>(url).pipe(
       map((response) => {
         if (response.status !== 'ok') return [];
-        console.log(response);
         const conversations = response.messages.map((m: any) => {
           const phoneNumber = (m.contact ?? '').replace(/\D/g, '');
           return {
@@ -64,9 +63,8 @@ export class MessageService {
     const phoneNumber = conversationId.replace(/\D/g, '');
     const url = `${this.backendBaseUrl}/${phoneNumber}/messages`;
 
-    return this.http.request<ApiListResponse>('GET', url, {
-      body: { limit, offset },
-      responseType: 'json'
+    return this.http.get<ApiListResponse>(url, {
+      params: { limit, offset }
     }).pipe(
       map((response) => {
         if (!response || (response as any).status !== 'ok') return [];
