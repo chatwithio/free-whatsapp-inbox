@@ -1,6 +1,6 @@
 <div class="conversation-view">
     <div class="conversation-view__main">
-        <div class="conversation-view__messages">
+        <div #scrollContainer class="conversation-view__messages" (scroll)="handleScroll($event)">
             @if (messages.length > 0) {
             @for (message of messages; track message.id) {
             <div class="conversation-view__message" [ngClass]="message.sender">
@@ -17,6 +17,7 @@
                 No hay mensajes para esta conversación.
             </div>
             }
+            <div #bottom></div>
         </div>
 
         <div class="conversation-view__input-container">
