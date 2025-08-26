@@ -1,6 +1,13 @@
 <div class="conversation-view">
     <div class="conversation-view__main">
         <div #scrollContainer class="conversation-view__messages" (scroll)="handleScroll($event)">
+            @if (loadingOlder) {
+            <!-- Loader superior mientras se cargan mensajes antiguos -->
+            <div class="older-loader" role="status" aria-live="polite">
+                <span class="spinner" aria-hidden="true"></span>
+                <span class="label">Cargando mensajes anteriores…</span>
+            </div>
+            }
             @if (messages.length > 0) {
             @for (message of messages; track message.id) {
             <div class="conversation-view__message" [ngClass]="message.sender">

@@ -39,7 +39,7 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges, 
   // Paginación / estados
   private pageSize = 20;
   private loadedCount = 0;             // nº total de mensajes cargados (para pedir más antiguos)
-  private loadingOlder = false;
+  public loadingOlder = false;
   private allOlderLoaded = false;
 
   // Scroll / autoscroll
