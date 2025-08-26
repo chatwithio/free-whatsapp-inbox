@@ -194,17 +194,16 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges, 
         this.isSending = false;
         this.newMessageText = '';
 
-        // if (serverMsg) {
-        //   // Si el backend devuelve el mensaje creado, lo añadimos aquí
-        //   const knownIds = new Set(this.messages.map(m => m.id));
-        //   if (!knownIds.has(serverMsg.id)) {
-        //     this.messages = this.mergeAppend(this.messages, [serverMsg]);
-        //     console.log('Mensaje enviado y añadido:', serverMsg);
-        //     this.loadedCount = this.messages.length;
-        //     // Tras enviar, baja al fondo
-        //     this.shouldScrollToBottom = true;
-        //   }
-        // }
+        if (serverMsg) {
+          // Si el backend devuelve el mensaje creado, lo añadimos aquí
+          const knownIds = new Set(this.messages.map(m => m.id));
+          if (!knownIds.has(serverMsg.id)) {
+            this.messages = this.mergeAppend(this.messages, [serverMsg]);
+            this.loadedCount = this.messages.length;
+            // Tras enviar, baja al fondo
+            this.shouldScrollToBottom = true;
+          }
+        }
         // Si no devuelve nada, el polling lo traerá en breve.
       },
       error: () => {
