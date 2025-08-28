@@ -6,21 +6,14 @@ Un sistema de bandeja de entrada gratuito y open-source para recibir, visualizar
 
 ## ✨ Características
 
-- 🟢 Conexión con la API de WhatsApp de 360dialog.
+- 🟢 Conexión directa con la API de WhatsApp de 360dialog.
 - 🧵 Conversaciones agrupadas por número.
-- 📥 Visualización en tiempo real de mensajes.
+- 📥 Visualización en tiempo real de mensajes con actualización automática.
 - ✍️ Envío de mensajes directamente desde el panel.
-- 🗂 Interfaz tipo chat sencilla y moderna.
-- 📱 Vista responsive adaptada a móvil (WhatsApp style).
-- 🔌 Backend en Symfony + almacenamiento en base de datos.
-- 🔁 Webhook con reenvío a sistemas externos como Bloomreach.
-
----
-
-## 🚀 Demo rápida
-
-Puedes ver una demo funcionando en:  
-🔗 [https://free-whatsapp-inbox.vercel.app](https://free-whatsapp-inbox.vercel.app)
+- 📂 Infinite scroll para cargar mensajes antiguos de forma progresiva.
+- 🔑 Autenticación por token (INBOX-SERVICES-TOKEN) por cada usuario.
+- 📱 Interfaz responsive.
+- 🔁 Webhook preparado para recibir plantillas.
 
 ---
 
@@ -28,9 +21,8 @@ Puedes ver una demo funcionando en:
 
 - Node.js `>=18`
 - Angular CLI `>=17`
-- Symfony `>=6` (opcional si conectas a tu propio backend)
-- Base de datos MySQL o SQLite
 - Una cuenta de [360dialog](https://www.360dialog.com/) con un número de WhatsApp conectado
+- Estar registrado en https://services.tochat.be
 
 ---
 
@@ -49,10 +41,28 @@ cd free-whatsapp-inbox
 npm install
 ```
 
-### 3. Ejecutar el entorno local
+### 3. Configurar variables de entorno
 
+Configurar archivo environment.ts:
+
+- El backendBaseUrl lo dejamos como viene por defecto.
+- Modificamos el inboxServicesToken, para ello: 
+    1. Vamos a nuestra cuenta de https://services.tochat.be
+    2. Accedemos a integraciones > 360dialog > Whatsapp Inbox (https://services.tochat.be/es/app/profile/whatsapp-inbox-config)
+    3. Nos aparece nuestro token bajo la etiqueta: "Use this token in your inbox library". Lo copiamos.
+    4. Lo pegamos en nuestro archivo environment.ts
+
+### 4. Configurar callback URL en 360Dialog
+
+1. Accedemos a integraciones > 360dialog > Whatsapp Inbox (https://services.tochat.be/es/app/profile/whatsapp-inbox-config)
+2. Bajo la etiqueta "Set this url for your webhook in 360 Dialog" aparece la URL. La copiamos.
+3. Ejecutamos el siguiente comando en la terminal para cambiar el callback URL de 360Dialog:
 ```bash
-ng serve
+curl --request POST \
+  --url https://waba-v2.360dialog.io/v1/configs/webhook \
+  --header 'Content-Type: application/json' \
+  --header 'D360-Api-Key: TU_API_KEY_DE_360' \
+  --data '{"url": "LA_URL_COPIADA_EN_EL_PASO_ANTERIOR"}'
 ```
 
 ### 🖼 Cambiar el logo
