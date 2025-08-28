@@ -22,7 +22,7 @@ Un sistema de bandeja de entrada gratuito y open-source para recibir, visualizar
 - Node.js `>=18`
 - Angular CLI `>=17`
 - Una cuenta de [360dialog](https://www.360dialog.com/) con un número de WhatsApp conectado
-- Estar registrado en https://services.tochat.be
+- Estar registrado en https://services.tochat.be y tener configurada tu WhatsApp API Key en nuestro sistema. [Acceso Rápido](https://services.tochat.be/es/app/profile/integrations/whatsapp/edit)
 
 ---
 
