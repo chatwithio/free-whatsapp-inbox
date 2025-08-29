@@ -34,12 +34,16 @@
         border-bottom: 1px solid #ddd;
         padding: 10px;
         display: flex;
-        justify-content: space-between;
+        gap: 10px;
         align-items: center;
     }
 
     &__phone {
         font-weight: bold;
+    }
+
+    &__info-conversation {
+        display: none;
     }
 
     &__agent {
@@ -64,5 +68,37 @@
 
     &__search {
         padding: 10px;
+    }
+}
+
+// MOBILE
+@media screen and (max-width: 768px) {
+    .inbox {
+        &__sidebar {
+            width: 100%;
+            max-width: none;
+            border-right: none;
+        }
+
+        &__main {
+            display: none;
+        }
+
+        &__info-conversation {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: right;
+        }
+    }
+
+    .inbox.conversation-opened {
+        .inbox__sidebar {
+            display: none;
+        }
+
+        .inbox__main {
+            display: flex;
+        }
     }
 }

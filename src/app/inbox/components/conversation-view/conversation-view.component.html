@@ -1,4 +1,4 @@
-<div class="conversation-view">
+<div class="conversation-view" [ngClass]="{ 'show-details': showDetails }">
     <div class="conversation-view__main">
         <div #scrollContainer class="conversation-view__messages" (scroll)="handleScroll($event)">
             @if (loadingOlder) {

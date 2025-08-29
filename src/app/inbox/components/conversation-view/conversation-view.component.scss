@@ -121,3 +121,28 @@
         }
     }
 }
+
+// MOBILE
+@media screen and (max-width: 768px) {
+    .conversation-view {
+        &__details {
+            display: none;
+        }
+    }
+
+    .conversation-view.show-details {
+        .conversation-view__main {
+            display: none;
+        }
+
+        .conversation-view__details {
+            display: block;
+            width: 100%;
+            border-left: none;
+
+            &-header {
+                text-align: center;
+            }
+        }
+    }
+}

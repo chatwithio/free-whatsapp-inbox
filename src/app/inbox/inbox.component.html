@@ -1,4 +1,4 @@
-<div class="inbox">
+<div class="inbox" [ngClass]="{ 'conversation-opened': selectedConversationId !== null }">
     <div class="inbox__sidebar">
         <div class="inbox__search">
             <input type="text" placeholder="Buscar...">
@@ -15,15 +15,22 @@
         @if (selectedConversationId; as id) {
         <!-- Header de la conversación -->
         <div class="inbox__header">
+            <button class="inbox__back-btn btn-outlined" (click)="handleBackButtonClick()"
+                aria-label="Volver a la lista de conversaciones">
+                <i class="fas fa-arrow-left"></i>
+            </button>
             <div class="inbox__phone">
-                📞 {{ selectedConversation?.userName || selectedConversation?.phoneNumber }}
+                <i class="fas fa-phone"></i> {{ selectedConversation?.userName || selectedConversation?.phoneNumber }}
             </div>
-
+            <div class="inbox__info-conversation" title="Información de la conversación">
+                <i class="fas fa-circle-info" (click)="toggleConversationDetails()"></i>
+            </div>
         </div>
 
         <!-- Conversación -->
         <div class="inbox__conversation">
-            <app-conversation-view [conversationId]="id"></app-conversation-view>
+            <app-conversation-view [conversationId]="id"
+                [showDetails]="showConversationDetails"></app-conversation-view>
         </div>
         } @else {
         <div class="inbox__empty">

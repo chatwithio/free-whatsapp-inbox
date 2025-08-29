@@ -28,6 +28,7 @@ import { WhatsappFormatPipe } from '../../../shared/pipes/whatsapp-format.pipe';
 })
 export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges, AfterViewChecked {
   @Input() conversationId: string | null = null;
+  @Input() showDetails: boolean = false;
 
   @ViewChild('bottom') private bottom!: ElementRef<HTMLDivElement>;
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef<HTMLDivElement>;
