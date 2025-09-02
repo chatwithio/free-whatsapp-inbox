@@ -63,7 +63,14 @@
     }
 
     &__new-conversation-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         padding: 10px;
+
+        .no-read-filter {
+            cursor: pointer;
+        }
     }
 
     &__search {

@@ -20,6 +20,12 @@
         }
     }
 
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     &__phone {
         font-weight: 600;
         font-size: 1rem;
@@ -36,14 +42,22 @@
         text-overflow: ellipsis;
     }
 
+    &__last-message--unread {
+        font-weight: bold;
+    }
+
     &__unread {
         background-color: var(--primary-color);
         color: var(--text-color-light);
         font-size: 0.75rem;
-        padding: 2px 6px;
-        border-radius: 10px;
+        font-weight: bold;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 50%;
         display: inline-block;
-        margin-top: 4px;
+        margin-left: 8px;
     }
 
     &__empty {

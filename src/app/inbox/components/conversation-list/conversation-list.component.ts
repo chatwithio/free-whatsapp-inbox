@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Conversation } from '../../models/conversation.model';
 import { MessageService } from '../../services/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-conversation-list',
@@ -12,6 +13,7 @@ import { MessageService } from '../../services/message.service';
 })
 export class ConversationListComponent implements OnInit, OnDestroy {
   @Input() selectedConversationId: string | null = null;
+  @Input() onlyNoReadMessages: boolean = false;
   // Event when a conversation is selected
   @Output() conversationSelected = new EventEmitter<Conversation>();
 
@@ -19,6 +21,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   conversations: Conversation[] = [];
 
   private intervalId: any;
+  private sub?: Subscription;
 
   constructor(private messageService: MessageService) { }
 
@@ -28,9 +31,14 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       this.loadConversations();
     }, 5000);
+
+    this.sub = this.messageService.refreshPreview$.subscribe(() => {
+      this.loadConversations();
+    });
   }
 
   ngOnDestroy(): void {
+    this.sub?.unsubscribe();
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
@@ -40,6 +48,9 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     this.messageService.getConversations().subscribe({
       next: (data) => {
         this.conversations = data;
+        if (this.onlyNoReadMessages) {
+          this.conversations = this.conversations.filter(c => c.unreadCount > 0);
+        }
       },
       error: (err) => {
         console.error('Error al cargar las conversaciones:', err);
@@ -49,5 +60,11 @@ export class ConversationListComponent implements OnInit, OnDestroy {
 
   onSelectConversation(conversation: Conversation): void {
     this.conversationSelected.emit(conversation);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['onlyNoReadMessages']) {
+      this.loadConversations();
+    }
   }
 }

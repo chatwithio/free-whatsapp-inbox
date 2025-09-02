@@ -7,9 +7,18 @@
             <button class="inbox__new-conversation-btn" (click)="showModal = true">
                 Nueva conversación
             </button>
+            @if (onlyNoReadMessages) {
+            <i class="fas fa-eye no-read-filter" (click)="toggleNoReadMessages()"
+                title="Mostrar todas las conversaciones"></i>
+            } @else {
+            <i class="fas fa-eye-slash no-read-filter" (click)="toggleNoReadMessages()"
+                title="Mostrar solo conversaciones no leídas"></i>
+            }
+
         </div>
         <app-conversation-list (conversationSelected)="onConversationSelected($event)"
-            [selectedConversationId]="selectedConversationId"></app-conversation-list>
+            [selectedConversationId]="selectedConversationId"
+            [onlyNoReadMessages]="onlyNoReadMessages"></app-conversation-list>
     </div>
     <div class="inbox__main">
         @if (selectedConversationId; as id) {

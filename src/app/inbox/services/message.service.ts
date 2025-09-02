@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { Conversation } from '../models/conversation.model';
 import { Message } from '../../inbox/models/message.model';
 import { environment } from '../../../environments/environment';
@@ -16,8 +16,14 @@ type ApiListResponse = {
 export class MessageService {
 
   private backendBaseUrl = environment.inboxApiBaseUrl;
+  private _refreshPreview$ = new Subject<void>();
+  refreshPreview$ = this._refreshPreview$.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  triggerRefreshPreview() {
+    this._refreshPreview$.next();
+  }
 
   /**
    * Conversaciones = último mensaje de cada contacto.
@@ -36,7 +42,7 @@ export class MessageService {
             phoneNumber,
             userName: '',
             lastMessage: m.text ?? '',
-            unreadCount: 0
+            unreadCount: m.unreadCount ?? 0
           } as Conversation;
         });
 
@@ -89,5 +95,15 @@ export class MessageService {
     const url = `${this.backendBaseUrl}/send`;
     const payload = { to, message: messageText };
     return this.http.post(url, payload);
+  }
+
+  /**
+   * Marca un mensaje como leído por el receptor.
+   */
+  markConversationRead(conversationId: string) {
+    const phoneNumber = conversationId.replace(/\D/g, '');
+    const url = `${this.backendBaseUrl}/${phoneNumber}/read`;
+    const body: any = {};
+    return this.http.post<{ status: string; updated: number }>(url, body);
   }
 }

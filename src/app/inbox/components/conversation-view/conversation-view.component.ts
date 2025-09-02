@@ -95,6 +95,8 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges, 
         this.loadedCount = latest.length;
         this.allOlderLoaded = latest.length < this.pageSize;
         this.shouldScrollToBottom = true;
+
+        this.markConversationAsRead();
       },
       error: (err) => console.error('Error carga inicial:', err)
     });
@@ -123,6 +125,8 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges, 
         if (onlyNew.length) {
           this.messages = this.mergeAppend(this.messages, onlyNew);
           this.loadedCount = this.messages.length;
+
+          if (this.userIsAtBottom) this.markConversationAsRead();
           this.maybeScrollToBottomOnNew();
         }
       },
@@ -278,5 +282,24 @@ export class ConversationViewComponent implements OnInit, OnDestroy, OnChanges, 
 
     this.shouldScrollToBottom = false;
     this.userIsAtBottom = true;
+  }
+
+  /** Marca la conversación como leída */
+  private markConversationAsRead(): void {
+    if (!this.conversationId) return;
+
+    this.messageService.markConversationRead(this.conversationId).subscribe({
+      next: () => {
+        // Actualizar el estado de los mensajes
+        for (const msg of this.messages) {
+          msg.readByReceiver = true;
+        }
+        // Disparar actualización en la lista de conversaciones
+        this.messageService.triggerRefreshPreview();
+      },
+      error: (err) => {
+        console.error('Error al marcar como leída:', err);
+      }
+    });
   }
 }

@@ -4,4 +4,5 @@ export interface Message {
     sender: 'client' | 'agent';
     date: string;
     text: string;
+    readByReceiver: boolean;
 }
