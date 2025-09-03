@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://waba-v2.360dialog.io/messages',
-    apiKey: 'NICv8R4mnWaf2eHPqc28xGPhAK'
+    inboxApiBaseUrl: 'https://services.tochat.be/whatsapp-inbox',
+    inboxServicesToken: 'YOUR_SERVICES_SECRET_KEY'
 };

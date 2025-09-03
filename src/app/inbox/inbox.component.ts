@@ -25,6 +25,8 @@ export class InboxComponent {
   selectedConversationId: string | null = null;
   selectedConversation: Conversation | null = null;
   showModal = false;
+  showConversationDetails = false;
+  onlyNoReadMessages = false;
 
   constructor(private messageService: MessageService, private toast: ToastrService) { }
 
@@ -46,5 +48,18 @@ export class InboxComponent {
     });
   }
 
+  handleBackButtonClick() {
+    this.selectedConversationId = null;
+    this.selectedConversation = null;
+    this.showConversationDetails = false;
+  }
+
+  toggleConversationDetails() {
+    this.showConversationDetails = !this.showConversationDetails;
+  }
+
+  toggleNoReadMessages() {
+    this.onlyNoReadMessages = !this.onlyNoReadMessages;
+  }
 
 }

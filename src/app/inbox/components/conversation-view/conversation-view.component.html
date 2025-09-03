@@ -1,13 +1,20 @@
-<div class="conversation-view">
+<div class="conversation-view" [ngClass]="{ 'show-details': showDetails }">
     <div class="conversation-view__main">
-        <div class="conversation-view__messages">
+        <div #scrollContainer class="conversation-view__messages" (scroll)="handleScroll($event)">
+            @if (loadingOlder) {
+            <!-- Loader superior mientras se cargan mensajes antiguos -->
+            <div class="older-loader" role="status" aria-live="polite">
+                <span class="spinner" aria-hidden="true"></span>
+                <span class="label">Cargando mensajes anteriores…</span>
+            </div>
+            }
             @if (messages.length > 0) {
             @for (message of messages; track message.id) {
             <div class="conversation-view__message" [ngClass]="message.sender">
                 <div class="conversation-view__text" [innerHTML]="message.text | whatsappFormat">
                 </div>
                 <small class="conversation-view__date">
-                    {{ message.date | date:'shortTime' }}
+                    {{ message.date | date:'short' }}
                 </small>
             </div>
             }
@@ -17,6 +24,7 @@
                 No hay mensajes para esta conversación.
             </div>
             }
+            <div #bottom></div>
         </div>
 
         <div class="conversation-view__input-container">

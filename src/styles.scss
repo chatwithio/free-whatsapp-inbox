@@ -57,6 +57,16 @@ button.btn-secondary {
     background-color: var(--secondary-color);
 }
 
+button.btn-outlined {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+
+    &:hover {
+        background-color: var(--light-primary-color);
+    }
+}
+
 .form-wrapper {
     display: flex;
     flex-direction: column;

@@ -1,4 +1,4 @@
-<div class="inbox">
+<div class="inbox" [ngClass]="{ 'conversation-opened': selectedConversationId !== null }">
     <div class="inbox__sidebar">
         <div class="inbox__search">
             <input type="text" placeholder="Buscar...">
@@ -7,24 +7,39 @@
             <button class="inbox__new-conversation-btn" (click)="showModal = true">
                 Nueva conversación
             </button>
+            @if (onlyNoReadMessages) {
+            <i class="fas fa-eye no-read-filter" (click)="toggleNoReadMessages()"
+                title="Mostrar todas las conversaciones"></i>
+            } @else {
+            <i class="fas fa-eye-slash no-read-filter" (click)="toggleNoReadMessages()"
+                title="Mostrar solo conversaciones no leídas"></i>
+            }
+
         </div>
         <app-conversation-list (conversationSelected)="onConversationSelected($event)"
-            [selectedConversationId]="selectedConversationId"></app-conversation-list>
+            [selectedConversationId]="selectedConversationId"
+            [onlyNoReadMessages]="onlyNoReadMessages"></app-conversation-list>
     </div>
-
     <div class="inbox__main">
         @if (selectedConversationId; as id) {
         <!-- Header de la conversación -->
         <div class="inbox__header">
+            <button class="inbox__back-btn btn-outlined" (click)="handleBackButtonClick()"
+                aria-label="Volver a la lista de conversaciones">
+                <i class="fas fa-arrow-left"></i>
+            </button>
             <div class="inbox__phone">
-                📞 {{ selectedConversation?.userName || selectedConversation?.phoneNumber }}
+                <i class="fas fa-phone"></i> {{ selectedConversation?.userName || selectedConversation?.phoneNumber }}
             </div>
-
+            <div class="inbox__info-conversation" title="Información de la conversación">
+                <i class="fas fa-circle-info" (click)="toggleConversationDetails()"></i>
+            </div>
         </div>
 
         <!-- Conversación -->
         <div class="inbox__conversation">
-            <app-conversation-view [conversationId]="id"></app-conversation-view>
+            <app-conversation-view [conversationId]="id"
+                [showDetails]="showConversationDetails"></app-conversation-view>
         </div>
         } @else {
         <div class="inbox__empty">
