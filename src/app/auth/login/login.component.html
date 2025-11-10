@@ -1,0 +1,34 @@
+<div class="login">
+    <div class="login__card">
+        <div class="login__header">
+            <img src="/assets/chatwith-logo-min.svg" alt="Logo" class="login__logo">
+            <h2 class="login__title">Iniciar Sesión</h2>
+            <p class="login__subtitle">Accede al inbox de WhatsApp</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" class="login__form">
+            <div class="form-group">
+                <label for="email" class="form-group__label">Email</label>
+                <input type="email" id="email" name="email" class="form-group__input"
+                    [class.form-group__input--disabled]="isLoading" [(ngModel)]="email" placeholder="tu@email.com"
+                    [disabled]="isLoading" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-group__label">Contraseña</label>
+                <input type="password" id="password" name="password" class="form-group__input"
+                    [class.form-group__input--disabled]="isLoading" [(ngModel)]="password" placeholder="••••••••"
+                    [disabled]="isLoading" required>
+            </div>
+
+            <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+            </div>
+
+            <button type="submit" class="button" [class.button--disabled]="isLoading" [disabled]="isLoading">
+                <span *ngIf="!isLoading">Iniciar Sesión</span>
+                <span *ngIf="isLoading">Cargando...</span>
+            </button>
+        </form>
+    </div>
+</div>

@@ -2,6 +2,7 @@
 A free and open-source inbox system to receive, view, and reply to WhatsApp messages using the 360dialog API.
 ---
 ## ✨ Features
+- 🔐 Secure login with user authentication.
 - 🟢 Direct connection with 360dialog WhatsApp API.
 - 🧵 Conversations grouped by number.
 - 📥 Real-time message display with automatic updates.
@@ -30,11 +31,6 @@ npm install
 ### 3. Configure environment variables
 Configure the environment.ts file:
 - Leave the backendBaseUrl as it comes by default.
-- Modify the inboxServicesToken by following these steps: 
-    1. Go to your account at https://services.tochat.be
-    2. Access integrations > 360dialog > Whatsapp Inbox (https://services.tochat.be/es/app/profile/whatsapp-inbox-config)
-    3. Your token appears under the label: "Use this token in your inbox library". Copy it.
-    4. Paste it into your environment.ts file
 ### 4. Configure callback URL in 360Dialog
 1. Access integrations > 360dialog > Whatsapp Inbox (https://services.tochat.be/es/app/profile/whatsapp-inbox-config)
 2. Under the label "Set this url for your webhook in 360 Dialog" the URL appears. Copy it.
@@ -46,6 +42,12 @@ curl --request POST \
   --header 'D360-Api-Key: YOUR_360_API_KEY' \
   --data '{"url": "THE_URL_COPIED_IN_THE_PREVIOUS_STEP"}'
 ```
+### 🔐 Authentication
+The application requires login to access the inbox:
+1. Users must have an account at https://services.tochat.be
+2. Login with the same credentials (email/password)
+3. The system will automatically retrieve the user's WhatsApp inbox token
+4. Only users with WhatsApp inbox configured can access
 ### 🖼 Change the logo
 The logo is located in the `<header>` component, specifically in the following line:
 ```html

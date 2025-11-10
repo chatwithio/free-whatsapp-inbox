@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    inboxApiBaseUrl: 'https://services.tochat.be/whatsapp-inbox',
-    inboxServicesToken: 'YOUR_SERVICES_SECRET_KEY'
+    inboxApiBaseUrl: 'https://services.tochat.be/whatsapp-inbox'
+    // inboxApiBaseUrl: 'http://localhost:8000/whatsapp-inbox'
 };
