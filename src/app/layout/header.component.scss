@@ -34,6 +34,7 @@
     &__user {
         display: flex;
         align-items: center;
+        gap: 12px;
 
         &__username {
             margin-right: 15px;
@@ -41,16 +42,25 @@
         }
 
         &__logout {
-            background: transparent;
-            border: 1px solid white;
-            border-radius: 4px;
-            color: white;
-            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            background-color: transparent;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            color: #666;
 
             &:hover {
-                background-color: rgba(255, 255, 255, 0.2);
+                background-color: #fee;
+                border-color: #fcc;
+                color: #c33;
+            }
+
+            svg {
+                display: block;
             }
         }
     }

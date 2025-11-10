@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header.component';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,9 @@ import { HeaderComponent } from './layout/header.component';
 })
 export class AppComponent {
   title = 'ChatWith Inbox';
+
+  isAuthenticated$ = this.authService.isAuthenticated$;
+
+  constructor(private authService: AuthService) {
+  }
 }
